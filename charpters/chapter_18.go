@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// interface
+// interface 接口 内容一定要存在才可以
 
 type Common interface {
 	// interface 里面提供一些函数
