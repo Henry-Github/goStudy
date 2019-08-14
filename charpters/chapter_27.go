@@ -17,13 +17,20 @@ func main() {
 	go func(c chan int) {
 		time.Sleep(time.Second * 3)
 		c <- 1
+		close(c)
 	}(c)
 
 	for {
 		select {
-		case res := <-c:
-			fmt.Println("get data: ", res)
-		case <-time.After(time.Second * 4):
+		case res, ok := <-c:
+			fmt.Println(ok)
+			if ok {
+				fmt.Println("get data: ", res)
+			} else {
+				fmt.Println("channel closed, can not get data")
+			}
+
+		case <-time.After(time.Second * 2):
 			panic("timeout")
 
 		}
